@@ -19,7 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
+//test git commit
 import com.mosl.refreshandload.widget.FooterLoadHolder;
 import com.mosl.refreshandload.widget.HeaderRefreshHolder;
 import com.mosl.refreshandload.widget.RefreshLayout;
