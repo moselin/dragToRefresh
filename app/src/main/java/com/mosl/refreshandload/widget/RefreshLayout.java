@@ -8,6 +8,7 @@ import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,6 +38,8 @@ public class RefreshLayout extends FrameLayout
     private RefreshListener listener;//上拉下拉的回调接口
     private boolean isRefreshing = false;//是否在刷新中
     private boolean isLoadMoring = false;//是否在加载中
+    private boolean firstIn;//是否是刚进来就自动打开刷新
+
     public RefreshLayout(Context context)
     {
         super(context);
@@ -158,8 +161,9 @@ public class RefreshLayout extends FrameLayout
         refreshView.bringToFront();
         isCanLoadMore = true;
     }
-    public void refresh(){
+    public void refresh(boolean firstIn){
 
+        this.firstIn = firstIn;
         if (helper.smoothSlideViewTo(refreshView,0,maxPullDown))
         {
             ViewCompat.postInvalidateOnAnimation(this);
@@ -172,6 +176,17 @@ public class RefreshLayout extends FrameLayout
             }
         }
     }
+
+    public boolean isFirstIn()
+    {
+        return firstIn;
+    }
+
+    public void setFirstIn(boolean firstIn)
+    {
+        this.firstIn = firstIn;
+    }
+
     private class RefreshCallback extends ViewDragHelper.Callback
     {
         @Override
@@ -238,11 +253,11 @@ public class RefreshLayout extends FrameLayout
                 super.onViewPositionChanged(changedView, left, top, dx, dy);
                 if (mTop > 0 && mTop < maxPullDown)
                 {
-                    headerView.onViewPositionChanged(top, dy);
+                    headerView.onViewPositionChanged(top, dy,isFirstIn());
                 }
                 if (mTop < 0 && mTop < maxPullDown)
                 {
-                    footerView.onViewPositionChanged(top, dy);
+                    footerView.onViewPositionChanged(top, dy, isFirstIn());
                 }
             }
 

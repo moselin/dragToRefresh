@@ -4,6 +4,7 @@ package com.mosl.refreshandload.widget;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.util.Log;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -50,7 +51,7 @@ public class HeaderRefreshHolder extends RefreshHolder
     @Override
     void start()
     {
-      //无法在这里设置文字字体  暂时不明原因
+        stateTv.setText("刷新中...");
     }
 
     @Override
@@ -61,15 +62,17 @@ public class HeaderRefreshHolder extends RefreshHolder
     }
 
     @Override
-    public void onViewPositionChanged(final int top, int dy)
+    public void onViewPositionChanged(final int top, int dy, boolean firstIn)
     {
         int t = top / 4;
+        if (!firstIn)
         if (top > getHeight() / 2)
         {
-//            stateTv.setText("释放立即刷新");
+            stateTv.setText("释放立即刷新");
         }
         else
         {
+            stateTv.setText("下拉刷新");
         }
         if (dy != 0)
         {
@@ -77,7 +80,7 @@ public class HeaderRefreshHolder extends RefreshHolder
         }
     }
 
-    public void init()
+    private void init()
     {
         ObjectAnimator animator = ObjectAnimator.ofFloat(llRefresh, "translationY", llRefresh.getY(), 0);
         animator.setDuration(500).setInterpolator(new AccelerateInterpolator(1.2f));

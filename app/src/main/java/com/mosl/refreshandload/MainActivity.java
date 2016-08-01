@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-//test git commit  ahahah commit 
 import com.mosl.refreshandload.widget.FooterLoadHolder;
 import com.mosl.refreshandload.widget.HeaderRefreshHolder;
 import com.mosl.refreshandload.widget.RefreshLayout;
@@ -78,15 +77,13 @@ public class MainActivity extends AppCompatActivity
         ryView.setLayoutManager(new LinearLayoutManager(this));
         ryView.setAdapter(adapter);
 
-
-        refreshLayout.refresh();
-//        presenter.getWechat();
-//        presenter.down();
+        refreshLayout.refresh(true);//自动刷新
     }
 
     public void refreshUi(boolean needFresh)
     {
-
+        if (refreshLayout.isFirstIn())
+        refreshLayout.setFirstIn(false);
         refreshLayout.onComplete(ryView);
         if (needFresh)
             datas.clear();

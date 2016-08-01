@@ -58,8 +58,9 @@ abstract class RefreshHolder extends LinearLayout
      * 上下拉过程中重写些方法做一些自定义的动画之类的操作
      * @param top View滚动后的Y位置
      * @param dy 竖直方向的距离   正为向下滚动，负为向上滚动
+     * @param firstIn
      */
-    public abstract void onViewPositionChanged(int top,int dy);
+    public abstract void onViewPositionChanged(int top, int dy, boolean firstIn);
 
     /**
      *

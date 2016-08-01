@@ -5,7 +5,6 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.view.animation.AccelerateInterpolator;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -30,7 +29,7 @@ public class FooterLoadHolder extends RefreshHolder
     @Bind(R.id.refreshing_icon)
     ProgressBar refreshingIcon;
     @Bind(R.id.state_tv)
-    public TextView stateTv;
+    TextView stateTv;
     @Bind(R.id.llRefresh)
     LinearLayout llRefresh;
     @Bind(R.id.head_view)
@@ -51,7 +50,7 @@ public class FooterLoadHolder extends RefreshHolder
     @Override
     void start()
     {
-//        stateTv.setText("正在加载更多...");
+        stateTv.setText("加载中...");
     }
 
     @Override
@@ -62,20 +61,20 @@ public class FooterLoadHolder extends RefreshHolder
     }
 
     @Override
-    public void onViewPositionChanged(final int top, int dy)
+    public void onViewPositionChanged(final int top, int dy, boolean firstIn)
     {
         int t = top / 4;
-//        if (top > getHeight() / 2)
-//            stateTv.setText("释放立即加载更多!");
-//        else
-//            stateTv.setText("上拉加载更多!");
+        if (top > getHeight() / 2)
+            stateTv.setText("释放立即加载更多!");
+        else
+            stateTv.setText("上拉加载更多!");
         if (dy != 0 )
         {
             ViewHelper.setTranslationY(llRefresh,t);
         }
     }
 
-    void init()
+    private void init()
     {
         ObjectAnimator animator = ObjectAnimator.ofFloat(llRefresh, "translationY", llRefresh.getY(), 0);
         animator.setDuration(500).setInterpolator(new AccelerateInterpolator(1.2f));

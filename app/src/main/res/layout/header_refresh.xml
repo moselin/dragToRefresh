@@ -4,33 +4,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:background="#EBEAE8">
-<FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:background="#EBEAE8">
 
     <LinearLayout
         android:id="@+id/llRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:gravity="right">
 
         <ProgressBar
             android:id="@+id/refreshing_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
-
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="left">
         <TextView
             android:id="@+id/state_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:text="下拉刷新"
             android:textColor="#5E5E5E"
             android:textSize="16sp"/>
 
     </LinearLayout>
+    </LinearLayout>
 
-</FrameLayout>
 </RelativeLayout>
