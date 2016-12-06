@@ -47,27 +47,36 @@ public class FooterLoadHolder extends RefreshHolder
         return R.layout.footer_refresh;
     }
 
+
     @Override
-    void start()
+    public void normal()
+    {
+        stateTv.setText("上拉加载更多!");
+    }
+
+    @Override
+    public void canRefresh()
+    {
+        stateTv.setText("释放立即加载更多!");
+    }
+
+    @Override
+    public void beginRefresh()
     {
         stateTv.setText("加载中...");
     }
 
     @Override
-    void complete()
+    public void refreshComplete()
     {
         stateTv.setText("加载成功");
         init();
     }
 
     @Override
-    public void onViewPositionChanged(final int top, int dy, boolean firstIn)
+    public void viewChangedY(int top, int dy)
     {
         int t = top / 4;
-        if (top > getHeight() / 2)
-            stateTv.setText("释放立即加载更多!");
-        else
-            stateTv.setText("上拉加载更多!");
         if (dy != 0 )
         {
             ViewHelper.setTranslationY(llRefresh,t);

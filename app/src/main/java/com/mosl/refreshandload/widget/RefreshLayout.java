@@ -51,8 +51,9 @@ public class RefreshLayout extends FrameLayout
      */
     private void init()
     {
-        helper = ViewDragHelper.create(this,new RefreshCallback());
+        helper = ViewDragHelper.create(this, new RefreshCallback());
     }
+
     /**
      * 初始化可上下拉的控件，并记录其坐标
      */
@@ -95,7 +96,8 @@ public class RefreshLayout extends FrameLayout
         }
         if (!isCanRefresh())
             return super.onInterceptTouchEvent(ev);
-        if (isRefreshing){
+        if (isRefreshing)
+        {
             helper.processTouchEvent(ev);
             return true;
         }
@@ -112,6 +114,7 @@ public class RefreshLayout extends FrameLayout
 
     /**
      * 是否允许下拉刷新
+     *
      * @return true 允许 ||　false 不允许
      */
     private boolean isCanRefresh()
@@ -121,6 +124,7 @@ public class RefreshLayout extends FrameLayout
 
     /**
      * 是否允许上拉加载更多
+     *
      * @return true 允许 ||　false 不允许
      */
     private boolean isCanLoadMore()
@@ -135,6 +139,7 @@ public class RefreshLayout extends FrameLayout
 
     /**
      * 设置自定义的下拉刷新头部的View视图
+     *
      * @param headerView 自定义刷新的view视图
      */
     public void addHeaderView(RefreshHolder headerView)
@@ -149,6 +154,7 @@ public class RefreshLayout extends FrameLayout
 
     /**
      * 设置自定义的上拉刷新头部的View视图
+     *
      * @param footerView 自定义加载的view视图
      */
     public void addFooterView(RefreshHolder footerView)
@@ -161,10 +167,12 @@ public class RefreshLayout extends FrameLayout
         refreshView.bringToFront();
         isCanLoadMore = true;
     }
-    public void refresh(boolean firstIn){
+
+    public void refresh(boolean firstIn)
+    {
 
         this.firstIn = firstIn;
-        if (helper.smoothSlideViewTo(refreshView,0,maxPullDown))
+        if (helper.smoothSlideViewTo(refreshView, 0, maxPullDown))
         {
             ViewCompat.postInvalidateOnAnimation(this);
             if (listener != null)
@@ -209,17 +217,16 @@ public class RefreshLayout extends FrameLayout
                 {
                     if (mTop < maxPullDown / 2)
                     {
+                        helper.settleCapturedViewAt(initX, initY);
                         //下拉距离太小，自动回到顶部，不执行下拉刷新动作
-                        onComplete(releasedChild);
                     } else
                     {
                         helper.settleCapturedViewAt(initX, maxPullDown);
+                        isRefreshing = true;
+                        headerView.start();
                         if (listener != null)
                         {
-                            isRefreshing = true;
-                            headerView.start();
                             listener.onRefresh(releasedChild);
-
                         }
                     }
                 } else if (mTop < 0)
@@ -227,15 +234,14 @@ public class RefreshLayout extends FrameLayout
                     if (mTop > maxPullUp / 2)
                     {
                         //上拉距离太小，自动回到顶部，不执行上拉加载更多动作
-                        onComplete(releasedChild);
+                        helper.settleCapturedViewAt(initX, initY);
                     } else
                     {
                         helper.settleCapturedViewAt(initX, maxPullUp);
-                        invalidate();
+                        isLoadMoring = true;
+                        footerView.start();
                         if (listener != null)
                         {
-                            isLoadMoring = true;
-                            footerView.start();
                             listener.onLoadMore(releasedChild);
                         }
                     }
@@ -253,7 +259,7 @@ public class RefreshLayout extends FrameLayout
                 super.onViewPositionChanged(changedView, left, top, dx, dy);
                 if (mTop > 0 && mTop < maxPullDown)
                 {
-                    headerView.onViewPositionChanged(top, dy,isFirstIn());
+                    headerView.onViewPositionChanged(top, dy, isFirstIn());
                 }
                 if (mTop < 0 && mTop < maxPullDown)
                 {
@@ -293,6 +299,7 @@ public class RefreshLayout extends FrameLayout
 
     /**
      * 完成上拉或下拉操作
+     *
      * @param releasedChild 可下拉或上拉的视图
      */
     public void onComplete(View releasedChild)
@@ -312,7 +319,6 @@ public class RefreshLayout extends FrameLayout
                 headerView.complete();
                 isRefreshing = false;
             }
-
 
 
         }

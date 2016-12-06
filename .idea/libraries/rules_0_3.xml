@@ -6,7 +6,7 @@
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://F:/Android/abc/android-sdk-windows/extras/android/m2repository/com/android/support/test/rules/0.3/rules-0.3-sources.jar!/" />
+      <root url="jar://D:/studio/android-sdk-windows/extras/android/m2repository/com/android/support/test/rules/0.3/rules-0.3-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

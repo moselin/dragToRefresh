@@ -36,6 +36,7 @@ public class HeaderRefreshHolder extends RefreshHolder
     @Bind(R.id.head_view)
     RelativeLayout headView;
 
+
     public HeaderRefreshHolder(Context context)
     {
         super(context);
@@ -49,31 +50,34 @@ public class HeaderRefreshHolder extends RefreshHolder
     }
 
     @Override
-    void start()
+    public void normal()
+    {
+        stateTv.setText("下拉刷新");
+    }
+
+    @Override
+    public void canRefresh()
+    {
+        stateTv.setText("释放立即刷新");
+    }
+
+    @Override
+    public void beginRefresh()
     {
         stateTv.setText("刷新中...");
     }
 
     @Override
-    void complete()
+    public void refreshComplete()
     {
         stateTv.setText("刷新成功");
         init();
     }
 
     @Override
-    public void onViewPositionChanged(final int top, int dy, boolean firstIn)
+    public void viewChangedY(int top,int dy)
     {
         int t = top / 4;
-        if (!firstIn)
-        if (top > getHeight() / 2)
-        {
-            stateTv.setText("释放立即刷新");
-        }
-        else
-        {
-            stateTv.setText("下拉刷新");
-        }
         if (dy != 0)
         {
             ViewHelper.setTranslationY(llRefresh, t);
